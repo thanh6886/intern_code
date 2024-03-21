@@ -7,8 +7,11 @@ import Input from 'src/components/Input'
 import { SchemaLogin, schemaLogin } from 'src/utils/rules'
 import { ObjectSchema, AnyObject } from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { SetlocalStorage } from 'src/utils/utils'
+import { useNavigate } from 'react-router-dom'
 
 export default function LoginFrom() {
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -21,10 +24,12 @@ export default function LoginFrom() {
     mutationFn: (body: SchemaLogin) => authApi.login(body)
   })
 
-  const onSubmit = handleSubmit((data) => {
-    loginMutaion.mutate(data, {
+  const onSubmit = handleSubmit((paylaod) => {
+    loginMutaion.mutate(paylaod, {
       onSuccess: (data) => {
-        console.log(data)
+        console.log(data.data.data.user_cookie)
+        // SetlocalStorage(data.data.data.user_cookie)
+        navigate('/')
       }
     })
   })
@@ -33,14 +38,16 @@ export default function LoginFrom() {
       <form className='rounded bg-white p-10 shadow-sm' onSubmit={onSubmit} noValidate>
         <div className='text-2xl'>Đăng nhập</div>
         <Input
-          {...register('email')}
+          name='email'
+          register={register}
           type='email'
           className='mt-8'
           errorMessage={errors.email?.message}
           placeholder='Email'
         />
         <Input
-          {...register('password')}
+          name='password'
+          register={register}
           type='password'
           className='mt-2'
           errorMessage={errors.password?.message}
@@ -51,8 +58,8 @@ export default function LoginFrom() {
           <Button
             type='submit'
             className='flex  w-full items-center justify-center bg-red-500 py-4 px-2 text-sm uppercase text-white hover:bg-red-600'
-            // isLoading={loginMutaion.isLoading}
-            // disabled={loginMutaion.isLoading}
+            isLoading={loginMutaion.isLoading}
+            disabled={loginMutaion.isLoading}
           >
             Đăng nhập
           </Button>
