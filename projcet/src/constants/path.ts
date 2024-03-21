@@ -1,5 +1,6 @@
 const path = {
   home: '/',
-  login: '/login'
+  login: '/login',
+  register: '/register'
 } as const
 export default path
