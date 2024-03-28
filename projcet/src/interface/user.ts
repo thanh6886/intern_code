@@ -7,3 +7,8 @@ export interface User {
   login: string
   profile_id: number
 }
+
+export interface ILocation {
+  id: number
+  name: string
+}

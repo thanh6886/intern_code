@@ -27,8 +27,8 @@ export default function LoginFrom() {
   const onSubmit = handleSubmit((paylaod) => {
     loginMutaion.mutate(paylaod, {
       onSuccess: (data) => {
-        console.log(data.data.data.user_cookie)
-        // SetlocalStorage(data.data.data.user_cookie)
+        // console.log(data.data.data.token)
+        SetlocalStorage(data.data.data.token)
         navigate('/')
       }
     })
