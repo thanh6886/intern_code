@@ -3,11 +3,12 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import { range } from 'lodash'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { authApi } from 'src/apis/auth.api'
 import Button from 'src/components/Button'
 import Input from 'src/components/Input'
 import http from 'src/config/https'
+import path from 'src/constants/path'
 import { ILocation } from 'src/interface/user'
 import { SchemaRegister, schemaRegister } from 'src/utils/rules'
 
@@ -48,7 +49,7 @@ export default function RegisterForm() {
     })
   })
   return (
-    <div>
+    <div className='grid justify-center'>
       <div>
         <form className='rounded bg-white p-10 shadow-sm' onSubmit={onSubmit} noValidate>
           <div className='text-2xl'>Đăng nhập</div>
@@ -79,27 +80,28 @@ export default function RegisterForm() {
             autoComplete='on'
           />
           <Input
-            name='fullName'
+            name='fullname'
             register={register}
             type='text'
             className='mt-2'
-            // errorMessage={errors.fullname?.message}
-            placeholder='FullName'
+            errorMessage={errors.fullname?.message}
+            placeholder='fullName'
           />
-          {/* <label htmlFor='gioitinh'>giới tính</label>
+          <div>Giới tính</div>
           <select
-            name='gioitinh'
+            {...register('gender')}
             className='h-10 w-full cursor-pointer rounded-sm border border-black/10 px-3 hover:border-orange'
           >
             <option disabled>Giới tính</option>
-            {['nam', 'nữ', 'khác'].map((e) => (
+            {['male', 'famale'].map((e) => (
               <option key={e} value={e}>
                 {e}
               </option>
             ))}
           </select>
-          <div className='mt-1 text-red-600 min-h-[1.25rem] text-sm'>{errors.gender?.message}</div> */}
+          <div className='mt-1 text-red-600 min-h-[1.25rem] text-sm'>{errors.gender?.message}</div>
 
+          <div>Quốc Gia</div>
           <select
             {...register('region')}
             className='h-10 w-full cursor-pointer rounded-sm border border-black/10 px-3 hover:border-orange'
@@ -113,17 +115,21 @@ export default function RegisterForm() {
             ))}
           </select>
           <div className='mt-1 text-red-600 min-h-[1.25rem] text-sm'>{errors.region?.message}</div>
-
+          <div>Thành phố</div>
           <select
             {...register('state')}
             className='h-10 w-full cursor-pointer rounded-sm border border-black/10 px-3 hover:border-orange'
           >
-            <option disabled>Thành phố</option>
-            {cty.map((e: ILocation) => (
-              <option key={e.id} value={e.id}>
-                {e.name}
-              </option>
-            ))}
+            {cty && [
+              <option key='default' disabled>
+                {' --select an option -- '}
+              </option>,
+              cty.map((e: ILocation) => (
+                <option key={e.id} value={e.id}>
+                  {e.name}
+                </option>
+              ))
+            ]}
           </select>
 
           <div className='mt-1 text-red-600 min-h-[1.25rem] text-sm'>{errors.state?.message}</div>
@@ -131,11 +137,16 @@ export default function RegisterForm() {
             <Button
               type='submit'
               className='flex  w-full items-center justify-center bg-red-500 py-4 px-2 text-sm uppercase text-white hover:bg-red-600'
+              isLoading={RegisterMutaion.isLoading}
+              disabled={RegisterMutaion.isLoading}
             >
               Đăng nhập
             </Button>
           </div>
         </form>
+        <button className='w-full items-center justify-center bg-red-500 py-4 px-2 text-sm uppercase text-white hover:bg-red-600 mt-3'>
+          <Link to={path.login}>Register</Link>
+        </button>
       </div>
     </div>
   )

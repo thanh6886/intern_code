@@ -1,7 +1,7 @@
 import { RegisterOptions, UseFormGetValues } from 'react-hook-form'
 import * as yup from 'yup'
 
-type Rules = { [key in 'email' | 'password' | 'repeatPassword']?: RegisterOptions }
+type Rules = { [key in 'email' | 'password' | 'repeatPassword' | 'fullname']?: RegisterOptions }
 
 const checkPassWord = (refString: string) => {
   return yup
@@ -59,6 +59,20 @@ export const getRules = (getValues: UseFormGetValues<any>): Rules => ({
       message: 'Độ dài từ 6 - 160 ký tự'
     },
     validate: (v) => v === getValues('password') || 'PASS không khớp'
+  },
+  fullname: {
+    required: {
+      value: true,
+      message: 'tên là bắt buộc'
+    },
+    maxLength: {
+      value: 160,
+      message: 'Độ dài từ 6 - 160 ký tự'
+    },
+    minLength: {
+      value: 6,
+      message: 'Độ dài từ 6 - 160 ký tự'
+    }
   }
 })
 
@@ -91,7 +105,7 @@ export const schemaRegister = yup.object({
     .min(6, 'Độ dài từ 6 - 160 ký tự')
     .max(160, 'Độ dài từ 6 - 160 ký tự'),
   repeatPassword: checkPassWord('password'),
-  fullname: yup.string().required('tên là bắt buộc'),
+  fullname: yup.string().required('bắt bộc'),
   gender: yup.string().required('bắt bộc'),
   region: yup.string().required('bắt bộc'),
   state: yup.string().required('bắt bộc')
