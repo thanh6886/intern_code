@@ -14,3 +14,16 @@ export type AuthResponse = SuccessResponse<{
   token: string
   updatedAt: string
 }>
+
+export type Product = SuccessResponse<{
+  id: number
+  createdAt: string
+  status: string
+  currency: string
+  fundingMethod: string
+  total: number
+  order: string
+  client: string
+  invoice: string
+  createdBy: number
+}>

@@ -145,7 +145,7 @@ export default function RegisterForm() {
           </div>
         </form>
         <button className='w-full items-center justify-center bg-red-500 py-4 px-2 text-sm uppercase text-white hover:bg-red-600 mt-3'>
-          <Link to={path.login}>Register</Link>
+          <Link to={path.login}>Login</Link>
         </button>
       </div>
     </div>
