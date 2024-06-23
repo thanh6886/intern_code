@@ -1,0 +1,17 @@
+-src
+---assets
+----- icons
+----- images
+----- fonts 
+---components
+----- input
+---configs
+---containers
+---interfaces
+---layouts
+---pages
+---router
+---services
+---stores
+---utils
+---variables
